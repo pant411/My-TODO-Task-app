@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'screens/home.dart';
+import 'package:provider/provider.dart';
+import './states/providers/task.provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => TaskProvider(),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {

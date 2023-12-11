@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../states/providers/task.provider.dart';
 
 class MyListView extends StatefulWidget {
-  final List<String> task;
-  const MyListView({Key? key, required this.task}) : super(key: key);
+  const MyListView({Key? key}) : super(key: key);
 
   @override
   State<MyListView> createState() => _MyListViewState();
 }
 
 class _MyListViewState extends State<MyListView> {
-  void removeTask(int index) {
-    setState(() {
-      widget.task.removeAt(index);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    var tasks = Provider.of<TaskProvider>(context).tasks;
     return ListView.separated(
-      itemCount: widget.task.length,
+      itemCount: tasks.length,
       separatorBuilder: (BuildContext context, int index) {
         // Add space between ListTiles
         return const SizedBox(
@@ -35,7 +31,7 @@ class _MyListViewState extends State<MyListView> {
             ),
           ),
           child: ListTile(
-              title: Text(widget.task[index]),
+              title: Text(tasks[index].title),
               tileColor: const Color.fromARGB(255, 198, 236, 252),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8.0),
@@ -53,7 +49,9 @@ class _MyListViewState extends State<MyListView> {
                   IconButton(
                     icon: const Icon(Icons.delete),
                     onPressed: () {
-                      removeTask(index);
+                      // removeTask(index);
+                      Provider.of<TaskProvider>(context, listen: false)
+                          .removeTask(index);
                     },
                   ),
                 ],
