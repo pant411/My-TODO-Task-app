@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app_2/components/new_edit_task.dart';
 import '../states/providers/task.provider.dart';
 
 class MyListView extends StatefulWidget {
@@ -44,6 +45,7 @@ class _MyListViewState extends State<MyListView> {
                     icon: const Icon(Icons.edit),
                     onPressed: () {
                       // widget.showModalForm(context, index);
+                      showModalForm(context, index, tasks[index].title);
                     },
                   ),
                   IconButton(
@@ -57,6 +59,15 @@ class _MyListViewState extends State<MyListView> {
                 ],
               )),
         );
+      },
+    );
+  }
+
+  void showModalForm(BuildContext context, int index, String existValue) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return NewEditTaskForm(index: index, existValue: existValue);
       },
     );
   }
